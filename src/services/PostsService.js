@@ -3,7 +3,7 @@ import { Post } from "../models/Post.js"
 import { api } from "./AxiosService.js"
 
 class PostsService {
-    async getPaintingsByPageNumber(pageNumber) {
+    async getPostsByPageNumber(pageNumber) {
         if (pageNumber < 1) return
         const response = await api.get(`api/posts?page=${pageNumber}`)
         console.log(`page ${pageNumber} posts ${response.data}`)
@@ -16,6 +16,12 @@ class PostsService {
         console.log('all posts:', response.data)
         AppState.posts = response.data.posts.map(post => new Post(post))
         console.log('appstate posts', AppState.posts)
+    }
+
+    async getPostsByProfile(profileId) {
+        const response = await api.get(`api/posts?creatorId=${profileId}`)
+        console.log("this profile's posts:", response.data)
+        AppState.profilePosts = response.data.posts.map(post => new Post(post))
     }
 }
 

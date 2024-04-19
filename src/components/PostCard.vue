@@ -10,6 +10,7 @@ defineProps({post: Post})
 <template>
     <div class="col-12">
         <div class="card text-start">
+            <RouterLink :to="{name: 'ProfilePage', params:{profileId: post.creatorId}}">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-1">
@@ -23,6 +24,7 @@ defineProps({post: Post})
                     </div>
                 </div>
             </div>
+        </RouterLink>
             <div class="card-body container-fluid">
                 <div class="row">
                     <div class="col">

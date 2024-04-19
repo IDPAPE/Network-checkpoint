@@ -12,7 +12,7 @@ const ads = computed (()=> AppState.ads)
 
 async function changePage(pageNumber){
   try {
-    await postsService.getPaintingsByPageNumber(pageNumber)
+    await postsService.getPostsByPageNumber(pageNumber)
   }
   catch (error){
     Pop.toast('Could not change page number','error')
