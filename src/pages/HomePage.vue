@@ -1,7 +1,25 @@
 <script setup>
+import { computed, onMounted } from 'vue';
+import { AppState } from '../AppState.js';
 import PostCard from '../components/PostCard.vue';
+import Pop from '../utils/Pop.js';
+import { postsService } from '../services/PostsService.js';
 
+const posts = computed(()=> AppState.posts)
 
+async function getAllPosts(){
+  try {
+    await postsService.getAllPosts()
+  }
+  catch (error){
+    Pop.toast('could not get all posts', 'error')
+    console.error(error)
+  }
+}
+
+onMounted(()=>{
+  getAllPosts()
+})
 </script>
 
 <template>
@@ -9,13 +27,13 @@ import PostCard from '../components/PostCard.vue';
 <div class="container-fluid">
   <section class="row">
 
-    <div class="col-1">
+    <div class="col-2">
 
       <ProfileDisplay/>
 
     </div>
 
-    <div class="col-9">
+    <div class="col-8">
 
     <div class="row bg-primary p-4">
       <form class="text-light">
@@ -36,8 +54,8 @@ import PostCard from '../components/PostCard.vue';
       </form>
     </div>
 
-    <div class="row">
-      <PostCard/>
+    <div v-for="post in posts" :key="post.id" class="row">
+      <PostCard :post="post"/>
     </div>
 
   </div>
