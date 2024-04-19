@@ -1,4 +1,6 @@
 <script setup>
+import PostCard from '../components/PostCard.vue';
+
 
 </script>
 
@@ -14,10 +16,31 @@
     </div>
 
     <div class="col-9">
-      
-      <Posts/>
 
+    <div class="row bg-primary p-4">
+      <form class="text-light">
+        <div class="col-12">
+          <h4>Post Body</h4>
+          <textarea class="w-100 rounded" name="post-body" id="post-body" cols="" rows="10"></textarea>
+        </div>
+        <div class="container-fluid">
+          <div class="row w-100">
+            <div class="col-4">
+              <input class="w-100 h-100 rounded" type="text" placeholder="insert image URL">
+            </div>
+            <div class="col-2">
+              <button class="btn btn-light w-100">post</button>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
+
+    <div class="row">
+      <PostCard/>
+    </div>
+
+  </div>
     
     <div class="col-2">
       Ads go here
@@ -37,12 +60,18 @@
   </template>
 
 <style scoped lang="scss">
-// .pfp{
-//   height: 100px;
-//   width: 100px;
-//   object-fit: contain;
-//   object-position: center;  
-// }
+.post-img{
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+.pfp{
+  height: 100px;
+  width: 100px;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center;  
+}
 
 .home {
   display: grid;
@@ -53,14 +82,6 @@
 
   .home-card {
     width: clamp(500px, 50vw, 100%);
-
-    >img {
-      height: 200px;
-      max-width: 200px;
-      width: 100%;
-      object-fit: contain;
-      object-position: center;
-    }
   }
 }
 </style>
