@@ -4,9 +4,11 @@ import { AppState } from '../AppState.js';
 import PostCard from '../components/PostCard.vue';
 import Pop from '../utils/Pop.js';
 import { postsService } from '../services/PostsService.js';
+import { adsService } from '../services/AdsService.js';
 
 const currentPage = computed (()=> AppState.currentPage)
 const posts = computed(()=> AppState.posts)
+const ads = computed (()=> AppState.ads)
 
 async function changePage(pageNumber){
   try {
@@ -28,8 +30,19 @@ async function getAllPosts(){
   }
 }
 
+async function getAllAds(){
+  try {
+    await adsService.getAllAds()
+  } 
+  catch (error) {
+    Pop.toast('could not get ads', 'error')
+    console.error(error)
+  }
+}
+
 onMounted(()=>{
   getAllPosts()
+  getAllAds()
 })
 </script>
 
@@ -94,7 +107,9 @@ onMounted(()=>{
   </div>
     
     <div class="col-2">
-      Ads go here
+      <div v-for="ad in ads" :key="ad.title" class="row">
+        <Ad :ad="ad"/>
+      </div>
     </div>
 
   </section>
