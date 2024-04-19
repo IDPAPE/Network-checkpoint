@@ -5,7 +5,18 @@ import PostCard from '../components/PostCard.vue';
 import Pop from '../utils/Pop.js';
 import { postsService } from '../services/PostsService.js';
 
+const currentPage = computed (()=> AppState.currentPage)
 const posts = computed(()=> AppState.posts)
+
+async function changePage(pageNumber){
+  try {
+    await postsService.getPaintingsByPageNumber(pageNumber)
+  }
+  catch (error){
+    Pop.toast('Could not change page number','error')
+    console.error(error)
+  }
+}
 
 async function getAllPosts(){
   try {
@@ -54,8 +65,30 @@ onMounted(()=>{
       </form>
     </div>
 
-    <div v-for="post in posts" :key="post.id" class="row">
+    <div class="row p-2">
+      <div class="col">
+        <h5 @click="changePage(AppState.currentPage - 1)" class="selectable"><i class="mdi mdi-arrow-left"></i>Previous Page</h5>
+      </div>
+      <div class="col-4 text-center">
+        <h5>Page: {{ currentPage }}</h5>
+      </div>
+      <div class="col text-end">
+        <h5 @click="changePage(AppState.currentPage + 1)" class="selectable">Next Page<i class="mdi mdi-arrow-right"></i></h5>
+      </div>
+    </div>
+    <div v-for="post in posts" :key="post.id" class="row my-2">
       <PostCard :post="post"/>
+    </div>
+    <div class="row p-2">
+      <div class="col">
+        <h5 @click="changePage(AppState.currentPage - 1)" class="selectable"><i class="mdi mdi-arrow-left"></i>Previous Page</h5>
+      </div>
+      <div class="col-4 text-center">
+        <h5>Page: {{ currentPage }}</h5>
+      </div>
+      <div class="col text-end">
+        <h5 @click="changePage(AppState.currentPage + 1)" class="selectable">Next Page<i class="mdi mdi-arrow-right"></i></h5>
+      </div>
     </div>
 
   </div>
