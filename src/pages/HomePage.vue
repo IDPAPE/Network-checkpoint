@@ -155,7 +155,7 @@ onMounted(()=>{
         <h5 @click="changePage(AppState.currentPage + 1)" class="selectable">Next Page<i class="mdi mdi-arrow-right"></i></h5>
       </div>
     </div>
-    <div class="row"><h4>Users <hr/></h4></div>
+    <div v-if="!profiles == null"  class="row"><h4>Users <hr/></h4></div>
     <div v-if="profiles" class="row">
       <div v-for="profile in profiles" :key="profile.id" class="row mb-5">
       <ProfileCard :profile="profile"/>

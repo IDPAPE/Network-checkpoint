@@ -19,6 +19,10 @@ class ProfilesService {
         AppState.searchedProfiles = response.data.map(profile => new Profile(profile))
         console.log(AppState.searchedProfiles)
     }
+
+    async clearProfiles() {
+        AppState.searchedProfiles.splice(0, AppState.searchedProfiles.length)
+    }
 }
 
 export const profilesService = new ProfilesService()

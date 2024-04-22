@@ -2,6 +2,9 @@
 import { onMounted, ref } from 'vue';
 import { loadState, saveState } from '../utils/Store.js';
 import Login from './Login.vue';
+import { postsService } from '../services/PostsService.js';
+import Pop from '../utils/Pop.js';
+import { profilesService } from '../services/ProfilesService.js';
 
 const theme = ref(loadState('theme') || 'light')
 
@@ -15,13 +18,23 @@ function toggleTheme() {
   saveState('theme', theme.value)
 }
 
+function resetHome(){
+  try {
+    postsService.getAllPosts()
+    profilesService.clearProfiles()
+  } catch (error) {
+    Pop.toast("couldn't return home", 'error')
+    console.error(error)
+  }
+}
+
 </script>
 
 <template>
   <nav class="navbar navbar-expand-sm navbar-dark bg-black p-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
-        <h1>Like Posts and Stuff!</h1>
+        <h1 @click="resetHome()">Like Posts and Stuff!</h1>
       </div>
     </router-link>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
