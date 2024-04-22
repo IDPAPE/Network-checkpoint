@@ -5,6 +5,7 @@ import Pop from '../utils/Pop.js';
 import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState.js';
 import { postsService } from '../services/PostsService.js';
+import { adsService } from '../services/AdsService.js';
 
 const profilePage = computed (()=> AppState.profilePage)
 const ads = computed (()=> AppState.ads)
@@ -32,6 +33,16 @@ async function getPostsByProfile(){
     }
 }
 
+async function getAllAds(){
+  try {
+    await adsService.getAllAds()
+  } 
+  catch (error) {
+    Pop.toast('could not get ads', 'error')
+    console.error(error)
+  }
+}
+
 async function changePage(pageNumber){
   try {
     await postsService.getProfilePostsByPageNumber(pageNumber)
@@ -42,9 +53,12 @@ async function changePage(pageNumber){
   }
 }
 
+// FIXME get ads on this page as well!
+
 onMounted(()=>{
     getProfileById()
     getPostsByProfile()
+    getAllAds()
 })
 </script>
 
@@ -86,6 +100,7 @@ onMounted(()=>{
                         <h5>{{ profile.email }}</h5>
                     </div>
                     <div class="col-4">
+                        <!-- FIXME add bio and resume -->
                         <h5>Socials
                             <hr />
                         </h5>

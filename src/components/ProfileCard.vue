@@ -8,7 +8,7 @@ defineProps({profile: Profile})
 
 
 <template>
-<!-- <RouterLink :to="{name: 'ProfilePage', params:{profileId}}"> -->
+<RouterLink :to="{name: 'ProfilePage', params:{profileId: profile.id}}">
 <div class="card text-start">
     <div class="card-body">
         <div class="row">
@@ -21,7 +21,7 @@ defineProps({profile: Profile})
         </div>
     </div>
 </div>
-<!-- </RouterLink> -->
+</RouterLink>
 
 </template>
 

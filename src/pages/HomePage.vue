@@ -144,7 +144,7 @@ onMounted(()=>{
     <div v-for="post in posts" :key="post.id" class="row mb-5">
       <PostCard :post="post"/>
     </div>
-    <div v-if="!posts == null" class="row p-2">
+    <div  class="row p-2">
       <div class="col">
         <h5 @click="changePage(AppState.currentPage - 1)" class="selectable"><i class="mdi mdi-arrow-left"></i>Previous Page</h5>
       </div>
