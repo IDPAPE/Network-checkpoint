@@ -47,31 +47,30 @@ onMounted(()=>{
 </script>
 
 <template>
-    <h1>Home Page</h1>
 <div class="container-fluid">
   <section class="row">
 
-    <div class="col-2">
+    <div class="col-2 bg-secondary text-light p-3">
 
       <ProfileDisplay/>
 
     </div>
 
-    <div class="col-8">
+    <div class="col-8 p-5">
 
-    <div class="row bg-primary p-4">
-      <form class="text-light">
+    <div class="row bg-primary p-4 rounded mb-5">
+      <form class="text-seconday">
         <div class="col-12">
           <h4>Post Body</h4>
           <textarea class="w-100 rounded" name="post-body" id="post-body" cols="" rows="10"></textarea>
         </div>
         <div class="container-fluid">
-          <div class="row w-100">
+          <div class="row w-100 pt-3">
             <div class="col-4">
-              <input class="w-100 h-100 rounded" type="text" placeholder="insert image URL">
+              <input class="w-100 h-100 rounded text-center" type="text" placeholder="insert image URL">
             </div>
             <div class="col-2">
-              <button class="btn btn-light w-100">post</button>
+              <button class="btn btn-light w-100 border-dark bg-page">post</button>
             </div>
           </div>
         </div>
@@ -89,7 +88,7 @@ onMounted(()=>{
         <h5 @click="changePage(AppState.currentPage + 1)" class="selectable">Next Page<i class="mdi mdi-arrow-right"></i></h5>
       </div>
     </div>
-    <div v-for="post in posts" :key="post.id" class="row my-2">
+    <div v-for="post in posts" :key="post.id" class="row mb-5">
       <PostCard :post="post"/>
     </div>
     <div class="row p-2">
@@ -106,8 +105,8 @@ onMounted(()=>{
 
   </div>
     
-    <div class="col-2">
-      <div v-for="ad in ads" :key="ad.title" class="row">
+    <div class="col-2 bg-secondary p-3">
+      <div v-for="ad in ads" :key="ad.title" class="row rounded">
         <Ad :ad="ad"/>
       </div>
     </div>

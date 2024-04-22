@@ -8,7 +8,7 @@ defineProps({ad: Ad})
 
 
 <template>
-    <img class="my-2" :src="ad.tall" alt="">
+    <img class="mb-3" :src="ad.tall" alt="">
 </template>
 
 

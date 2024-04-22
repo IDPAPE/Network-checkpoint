@@ -9,9 +9,9 @@ defineProps({post: Post})
 
 <template>
     <div class="col-12">
-        <div class="card text-start">
+        <div class="card text-start ">
             <RouterLink :to="{name: 'ProfilePage', params:{profileId: post.creatorId}}">
-            <div class="container-fluid">
+            <div class="container-fluid text-primary">
                 <div class="row">
                     <div class="col-1">
                         <img class="pfp"
@@ -55,5 +55,9 @@ defineProps({post: Post})
   max-width: 100%;
   object-fit: contain;
   object-position: center;
+}
+
+.link{
+    text-decoration: none;
 }
 </style>
