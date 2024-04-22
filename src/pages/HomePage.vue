@@ -85,7 +85,7 @@ onMounted(()=>{
 <div class="container-fluid">
   <section class="row">
 
-    <div class="col-2 bg-secondary text-light p-3">
+    <div class="col-2 bg-primary text-dark p-3">
 
       <ProfileDisplay/>
 
@@ -127,7 +127,7 @@ onMounted(()=>{
       </form>
     </div>
 
-    <div v-if="!posts == null" class="row p-2">
+    <div v-if="posts[0]" class="row p-2">
       <div class="col">
         <h5 @click="changePage(AppState.currentPage - 1)" class="selectable"><i class="mdi mdi-arrow-left"></i>Previous Page</h5>
       </div>
@@ -138,13 +138,13 @@ onMounted(()=>{
         <h5 @click="changePage(AppState.currentPage + 1)" class="selectable">Next Page<i class="mdi mdi-arrow-right"></i></h5>
       </div>
     </div>
-    <div class="row">
-      <h5 v-if="!posts == null" >Posts <hr /></h5>
+    <div v-if="posts[0]" class="row">
+      <h5 >Posts <hr /></h5>
     </div>
     <div v-for="post in posts" :key="post.id" class="row mb-5">
       <PostCard :post="post"/>
     </div>
-    <div  class="row p-2">
+    <div v-if="posts[0]" class="row p-2">
       <div class="col">
         <h5 @click="changePage(AppState.currentPage - 1)" class="selectable"><i class="mdi mdi-arrow-left"></i>Previous Page</h5>
       </div>
@@ -155,7 +155,7 @@ onMounted(()=>{
         <h5 @click="changePage(AppState.currentPage + 1)" class="selectable">Next Page<i class="mdi mdi-arrow-right"></i></h5>
       </div>
     </div>
-    <div v-if="!profiles == null"  class="row"><h4>Users <hr/></h4></div>
+    <div v-if="profiles[0]"  class="row"><h4>Users <hr/></h4></div>
     <div v-if="profiles" class="row">
       <div v-for="profile in profiles" :key="profile.id" class="row mb-5">
       <ProfileCard :profile="profile"/>
@@ -164,7 +164,7 @@ onMounted(()=>{
 
   </div>
     
-    <div class="col-2 bg-secondary p-3">
+    <div class="col-2 bg-primary p-3">
       <div v-for="ad in ads" :key="ad.title" class="row rounded">
         <Ad :ad="ad"/>
       </div>

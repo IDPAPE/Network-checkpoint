@@ -87,17 +87,18 @@ onMounted(()=>{
                     </div>
                 </div>
                 
-                <div v-if="profile" class="row justify-content-center">
-                    <div class="col-4 d-flex flex-direction: row">
-                        <h1>{{ profile.name }}
+                <div v-if="profile" class="row justify-content-center text-center">
+                    <div class="col-lg-4 col-12 d-flex flex-direction: row">
+                        <h1>{{ profile.name }}</h1>
+                        <h1>
                             <i class="mdi mdi-school"></i>
                             <i v-if="profile.graduated" class="mdi mdi-check"></i>
                             <i v-if="!profile.graduated" class="mdi mdi-cancel"></i>
                         </h1>
+                        <h5>{{ profile.class }}</h5>
                         <h5>{{ profile.email }}</h5>
                     </div>
-                    <div class="col-4">
-                        <!-- FIXME add bio and resume -->
+                    <div class="col-lg-4 col-12">
                         <h5>Links
                             <hr />
                         </h5>

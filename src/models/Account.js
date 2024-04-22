@@ -5,6 +5,7 @@ export class Account {
     this.name = data.name
     this.picture = data.picture
     this.coverImg = data.coverImg
+    this.class = data.class
     this.graduated = data.graduated
     this.github = data.github
     this.linkedin = data.linkedin

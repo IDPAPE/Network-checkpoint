@@ -18,15 +18,15 @@ import { logger } from "../utils/Logger.js";
 const account = computed(()=> AppState.account)
 
 const accountData = ref({
-  name: '',
-  picture: '',
-  coverImg: '',
-  class: '',
-  graduated: '',
-  github: '',
-  linkedin: '',
-  resume: '',
-  bio: ''
+  name: `${account.value.name}`,
+  picture: `${account.value.picture}`,
+  coverImg: `${account.value.coverImg}`,
+  class: `${account.value.class}`,
+  graduated: account.value.graduated,
+  github: `${account.value.github}`,
+  linkedin: `${account.value.linkedin}`,
+  resume: `${account.value.resume}`,
+  bio: `${account.value.bio}`
 
 })
 
@@ -34,6 +34,7 @@ async function saveAccount(){
 try {
   await accountService.saveAccount(accountData.value)
   console.log('Updated account', AppState.account)
+  Pop.success('Your account has been updated')
 } catch (error) {
   Pop.toast("Couldn't Save Account", 'error')
   console.error(error)
@@ -48,9 +49,13 @@ try {
 
 
 <form @submit.prevent="saveAccount()" class="row">
-    <div class="mb-3 col-4">
+    <div class="mb-3 col-2">
       <label for="account-name">Name</label>
       <input v-model="accountData.name" class="form-control" type="text" id="account-name"  minlength="3" required maxlength="25"/>
+    </div>
+    <div class="mb-3 col-2">
+      <label for="account-name">Class</label>
+      <input v-model="accountData.class" class="form-control" type="text" id="account-class"  minlength="3" required maxlength="25"/>
     </div>
     <div class="mb-3 col-4">
       <label for="account-picture">Picture</label>
@@ -72,9 +77,9 @@ try {
       <label for="account-resume">Resume</label>
       <input v-model="accountData.resume" class="form-control" type="url" id="account-resume" required maxlength="500">
     </div>
-    <div class="mb-3 col-3">
+    <div class="mb-3 pt-4 col-3">
       <label class="mx-3" for="account-graduated">Graduated:</label>
-      <input v-model="accountData.graduated" type="checkbox" id="account-graduated" required>
+      <input v-model="accountData.graduated" type="checkbox" id="account-graduated">
     </div>
     <div class="mb-3 col-12">
       <label for="account-bio">Bio</label>

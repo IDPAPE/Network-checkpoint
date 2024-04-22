@@ -31,7 +31,7 @@ function resetHome(){
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-sm navbar-dark bg-black p-3">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-secondary p-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
         <h1 @click="resetHome()"><i class="mdi mdi-home"></i> Networking</h1>
