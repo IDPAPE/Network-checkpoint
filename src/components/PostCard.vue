@@ -1,8 +1,37 @@
 <script setup>
+import { computed } from 'vue';
 import { Post } from '../models/Post.js';
+import { AppState } from '../AppState.js';
+import Pop from '../utils/Pop.js';
+import { postsService } from '../services/PostsService.js';
 
 
 defineProps({post: Post})
+
+const loggedInAccount = computed(()=> AppState.account)
+
+
+async function deletePost(postId){
+    try {
+        const confirmation = await Pop.confirm('are you sure you want to delete this post')
+        if (confirmation == false) return
+        await postsService.deletePost(postId)
+    } catch (error) {
+        Pop.toast('could not delete post', 'error')
+        console.error(error)
+    }
+}
+
+async function likePost(postId){
+    try {
+        await postsService.likePost(postId)
+        await postsService.getAllPosts()
+    } catch (error) {
+        Pop.toast('could not like post', 'error')
+        console.error(error)
+    }
+   
+}
 
 </script>
 
@@ -36,7 +65,14 @@ defineProps({post: Post})
                             alt="">
                     </div>
                 </div>
-                <button class="btn btn-danger m-0 my-2"><i class="mdi mdi-heart"></i> {{ post.likeIds.length }}</button>
+                <div class="row mt-3">
+                    <div class="col">
+                        <button @click="likePost(post.id)" class="btn btn-danger m-0 my-2"><i class="mdi mdi-heart"></i> {{ post.likeIds.length }}</button>
+                    </div>
+                    <div v-if="post.creatorId == loggedInAccount?.id" class="col text-end">
+                        <button v-if="post.creatorId == loggedInAccount?.id" @click="deletePost(post.id)" class="btn btn-danger m-0 my-2"><i class="mdi mdi-delete"></i></button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -31,7 +31,7 @@ const accountData = ref({
 async function saveAccount(){
 try {
   await accountService.saveAccount(accountData.value)
-  logger.log('Updated Data', AppState.account)
+  console.log('Updated account', AppState.account)
 } catch (error) {
   Pop.toast("Couldn't Save Account", 'error')
   console.error(error)
@@ -57,6 +57,22 @@ try {
     <div class="mb-3 col-4">
       <label for="account-cover-image">Cover Image</label>
       <input v-model="accountData.coverImg" class="form-control" type="url" id="account-cover-image" required maxlength="500">
+    </div>
+    <div class="mb-3 col-3">
+      <label for="account-email">Email</label>
+      <input v-model="accountData.email" class="form-control" type="text" id="account-email"  minlength="3" required maxlength="100"/>
+    </div>
+    <div class="mb-3 col-3">
+      <label for="account-gihthub">Github</label>
+      <input v-model="accountData.github" class="form-control" type="url" id="account-github" required maxlength="50">
+    </div>
+    <div class="mb-3 col-3">
+      <label for="account-linkedin">LinkedIn</label>
+      <input v-model="accountData.linkedin" class="form-control" type="url" id="account-linkedin" required maxlength="500">
+    </div>
+    <div class="mb-3 col-3">
+      <label for="account-resume">Resume</label>
+      <input v-model="accountData.resume" class="form-control" type="url" id="account-resume" required maxlength="500">
     </div>
 
     <div class="mb-3 col-6">

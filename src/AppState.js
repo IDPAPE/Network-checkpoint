@@ -6,6 +6,7 @@ import { Account } from './models/Account.js'
 // NOTE AppState is a reactive object to contain app level data
 export const AppState = reactive({
   currentPage: 1,
+  profilePage: 1,
 
   /** @type {{name, picture, id}} user info from Auth0*/
   user: null,

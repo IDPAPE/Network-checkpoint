@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { AppState } from '../AppState.js';
 import PostCard from '../components/PostCard.vue';
 import Pop from '../utils/Pop.js';
@@ -9,6 +9,12 @@ import { adsService } from '../services/AdsService.js';
 const currentPage = computed (()=> AppState.currentPage)
 const posts = computed(()=> AppState.posts)
 const ads = computed (()=> AppState.ads)
+const account = computed(()=> AppState.account)
+
+const postData = ref({
+  body: '',
+  imgUrl: '',
+})
 
 async function changePage(pageNumber){
   try {
@@ -40,6 +46,16 @@ async function getAllAds(){
   }
 }
 
+async function postPost(){
+  try {
+    console.log('this is the posts function working', postData.value)
+    await postsService.postPost(postData.value)
+  } catch (error) {
+    Pop.toast('could not post post post post post', 'error')
+    console.error(error)
+  }
+}
+
 onMounted(()=>{
   getAllPosts()
   getAllAds()
@@ -58,16 +74,16 @@ onMounted(()=>{
 
     <div class="col-8 p-5">
 
-    <div class="row bg-primary p-4 rounded mb-5">
-      <form class="text-seconday">
+    <div v-if="account" class="row bg-primary p-4 rounded mb-5">
+      <form @submit.prevent="postPost()" class="text-secondary">
         <div class="col-12">
           <h4>Post Body</h4>
-          <textarea class="w-100 rounded" name="post-body" id="post-body" cols="" rows="10"></textarea>
+          <textarea v-model="postData.body" required class="w-100 rounded form-control" name="post-body" id="post-body" cols="" rows="10"></textarea>
         </div>
         <div class="container-fluid">
           <div class="row w-100 pt-3">
             <div class="col-4">
-              <input class="w-100 h-100 rounded text-center" type="text" placeholder="insert image URL">
+              <input v-model="postData.imgUrl" class="w-100 h-100 rounded text-center form-control" type="text" placeholder="insert image URL">
             </div>
             <div class="col-2">
               <button class="btn btn-light w-100 border-dark bg-page">post</button>

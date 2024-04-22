@@ -25,8 +25,8 @@ const account = computed(()=>AppState.account)
                         <i v-if="account.graduated" class="mdi mdi-check"></i>
                         <i v-if="!account.graduated" class="mdi mdi-cancel"></i>
                     </h4>
-                    <h5 v-if="account.github"><i class="fs-4 mdi mdi-github"></i>{{ account.github }}</h5>
-                    <h5 v-if="account.linkedin"><i class="fs-4 mdi mdi-linkedin"></i>{{ account.linkedin }}</h5>
+                    <!-- <h5 v-if="account.github"><i class="fs-4 mdi mdi-github"></i>{{ account.github }}</h5>
+                    <h5 v-if="account.linkedin"><i class="fs-4 mdi mdi-linkedin"></i>{{ account.linkedin }}</h5> -->
                 </div>
             </div>
         </div>

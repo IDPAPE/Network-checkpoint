@@ -6,8 +6,11 @@ import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState.js';
 import { postsService } from '../services/PostsService.js';
 
+const profilePage = computed (()=> AppState.profilePage)
+const ads = computed (()=> AppState.ads)
 const profile = computed(()=>AppState.activeProfile)
 const posts = computed(()=> AppState.profilePosts)
+const account = computed(()=> AppState.account)
 
 const route = useRoute()
 
@@ -27,6 +30,16 @@ async function getPostsByProfile(){
         Pop.toast('can not get this profiles post','error')
         console.error(error)
     }
+}
+
+async function changePage(pageNumber){
+  try {
+    await postsService.getProfilePostsByPageNumber(pageNumber)
+  }
+  catch (error){
+    Pop.toast('Could not change page number','error')
+    console.error(error)
+  }
 }
 
 onMounted(()=>{
@@ -49,35 +62,70 @@ onMounted(()=>{
 
 <template>
     <div class="container-fluid">
-        <div v-if="profile" class="row">
-            <div class="col-12">
-                <img class="cover-img" :src="profile.coverImg" alt="">
-            </div>
-        </div>
-        <div v-if="profile" class="row">
-            <div class="col text-center">
-                <img class="pfp" :src="profile.picture" alt="">
+        <div class="row">
+            <div class="col-10">
+                <div v-if="profile" class="row">
+                    <div class="col-12">
+                        <img class="cover-img" :src="profile.coverImg" alt="">
+                    </div>
+                </div>
+                <div v-if="profile" class="row">
+                    <div class="col text-center">
+                        <img class="pfp" :src="profile.picture" alt="">
+                        <hr />
+                    </div>
+                </div>
                 
+                <div v-if="profile" class="row justify-content-center">
+                    <div class="col-4 d-flex flex-direction: row">
+                        <h1>{{ profile.name }}
+                            <i class="mdi mdi-school"></i>
+                            <i v-if="profile.graduated" class="mdi mdi-check"></i>
+                            <i v-if="!profile.graduated" class="mdi mdi-cancel"></i>
+                        </h1>
+                        <h5>{{ profile.email }}</h5>
+                    </div>
+                    <div class="col-4">
+                        <h5>Socials
+                            <hr />
+                        </h5>
+                        <h5 v-if="profile.github"><i class="fs-4 mdi mdi-github"></i>{{ profile.github }}</h5>
+                        <h5 v-if="profile.linkedin"><i class="fs-4 mdi mdi-linkedin"></i>{{ profile.linkedin }}</h5>
+                    </div>
+                </div>
+                <div class="row p-2">
+      <div class="col">
+        <h5 @click="changePage(AppState.profilePage - 1)" class="selectable"><i class="mdi mdi-arrow-left"></i>Previous Page</h5>
+      </div>
+      <div class="col-4 text-center">
+        <h5>Page: {{ profilePage }}</h5>
+      </div>
+      <div class="col text-end">
+        <h5 @click="changePage(AppState.profilePage + 1)" class="selectable">Next Page<i class="mdi mdi-arrow-right"></i></h5>
+      </div>
+    </div>
+                <div v-for="post in posts" :key="post.creatorId" class="row my-3">
+                    <PostCard :post="post" />
+                </div>
+                <div class="row p-2">
+      <div class="col">
+        <h5 @click="changePage(AppState.profilePage - 1)" class="selectable"><i class="mdi mdi-arrow-left"></i>Previous Page</h5>
+      </div>
+      <div class="col-4 text-center">
+        <h5>Page: {{ profilePage }}</h5>
+      </div>
+      <div class="col text-end">
+        <h5 @click="changePage(AppState.profilePage + 1)" class="selectable">Next Page<i class="mdi mdi-arrow-right"></i></h5>
+      </div>
+    </div>
+            </div>
+            <div class="col-2 p-3">
+                <div v-for="ad in ads" :key="ad.title" class="row rounded">
+                    <Ad :ad="ad" />
+                </div>
             </div>
         </div>
-        <div v-if="profile" class="row justify-content-center">
-            <div class="col-4 d-flex flex-direction: row">
-                <h1>{{ profile.name }} 
-                    <i class="mdi mdi-school"></i>
-                    <i v-if="profile.graduated" class="mdi mdi-check"></i>
-                    <i v-if="!profile.graduated" class="mdi mdi-cancel"></i>
-                </h1>
-                <h5>{{ profile.email }}</h5>
-            </div>
-            <div class="col-4">
-                <h5>Socials <hr/></h5>
-                <h5 v-if="profile.github"><i class="fs-4 mdi mdi-github"></i>{{ profile.github }}</h5>
-                <h5 v-if="profile.linkedin"><i class="fs-4 mdi mdi-linkedin"></i>{{ profile.linkedin }}</h5>
-            </div>
-        </div>
-        <div v-for="post in posts" :key="post.creatorId" class="row my-3">
-            <PostCard :post="post"/>
-        </div>
+
     </div>
 </template>
 
