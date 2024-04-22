@@ -5,11 +5,17 @@ import PostCard from '../components/PostCard.vue';
 import Pop from '../utils/Pop.js';
 import { postsService } from '../services/PostsService.js';
 import { adsService } from '../services/AdsService.js';
+import { profilesService } from '../services/ProfilesService.js';
 
 const currentPage = computed (()=> AppState.currentPage)
 const posts = computed(()=> AppState.posts)
 const ads = computed (()=> AppState.ads)
 const account = computed(()=> AppState.account)
+const profiles = computed(()=>AppState.searchedProfiles)
+
+const searchData = ref({
+  searchInput: ''
+})
 
 const postData = ref({
   body: '',
@@ -32,6 +38,19 @@ async function getAllPosts(){
   }
   catch (error){
     Pop.toast('could not get all posts', 'error')
+    console.error(error)
+  }
+}
+
+async function search(){
+  try {
+    console.log('searching posts using data:', searchData.value.searchInput
+    )
+    await postsService.search(searchData.value.searchInput)
+    await profilesService.getProfilesBySearch(searchData.value.searchInput)
+    searchData.value.searchInput = ''
+  } catch (error) {
+    Pop.toast('could not search posts','error')
     console.error(error)
   }
 }
@@ -74,6 +93,21 @@ onMounted(()=>{
 
     <div class="col-8 p-5">
 
+    <div class="row mb-3">
+      <div class="col">
+      <form @submit.prevent="search()">
+        <div class="row">
+          <div class="col-11">
+        <input v-model="searchData.searchInput" type="text" name="search-bar" id="search-bar" class="w-100 p-0 m-0" placeholder="Search Posts">
+          </div>
+          <div class="col-1">
+            <button class="btn btn-secondary m-0"><i class="mdi mdi-magnify"></i></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
     <div v-if="account" class="row bg-primary p-4 rounded mb-5">
       <form @submit.prevent="postPost()" class="text-secondary">
         <div class="col-12">
@@ -93,7 +127,7 @@ onMounted(()=>{
       </form>
     </div>
 
-    <div class="row p-2">
+    <div v-if="!posts == null" class="row p-2">
       <div class="col">
         <h5 @click="changePage(AppState.currentPage - 1)" class="selectable"><i class="mdi mdi-arrow-left"></i>Previous Page</h5>
       </div>
@@ -103,11 +137,14 @@ onMounted(()=>{
       <div class="col text-end">
         <h5 @click="changePage(AppState.currentPage + 1)" class="selectable">Next Page<i class="mdi mdi-arrow-right"></i></h5>
       </div>
+    </div>
+    <div class="row">
+      <h5 v-if="!posts == null" >Posts <hr /></h5>
     </div>
     <div v-for="post in posts" :key="post.id" class="row mb-5">
       <PostCard :post="post"/>
     </div>
-    <div class="row p-2">
+    <div v-if="!posts == null" class="row p-2">
       <div class="col">
         <h5 @click="changePage(AppState.currentPage - 1)" class="selectable"><i class="mdi mdi-arrow-left"></i>Previous Page</h5>
       </div>
@@ -117,6 +154,12 @@ onMounted(()=>{
       <div class="col text-end">
         <h5 @click="changePage(AppState.currentPage + 1)" class="selectable">Next Page<i class="mdi mdi-arrow-right"></i></h5>
       </div>
+    </div>
+    <div class="row"><h4>Users <hr/></h4></div>
+    <div v-if="profiles" class="row">
+      <div v-for="profile in profiles" :key="profile.id" class="row mb-5">
+      <ProfileCard :profile="profile"/>
+    </div>
     </div>
 
   </div>

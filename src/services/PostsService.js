@@ -35,6 +35,12 @@ class PostsService {
         AppState.profilePosts = response.data.posts.map(post => new Post(post))
     }
 
+    async search(searchData) {
+        const response = await api.get(`api/posts?query=${searchData}`)
+        console.log('searching for posts using', response.data)
+        AppState.posts = response.data.posts.map(post => new Post(post))
+    }
+
     async postPost(postData) {
         const response = await api.post('api/posts', postData)
         // console.log('im so close', response.data)
