@@ -11,7 +11,6 @@ const profilePage = computed (()=> AppState.profilePage)
 const ads = computed (()=> AppState.ads)
 const profile = computed(()=>AppState.activeProfile)
 const posts = computed(()=> AppState.profilePosts)
-const account = computed(()=> AppState.account)
 
 const route = useRoute()
 
@@ -52,8 +51,6 @@ async function changePage(pageNumber){
     console.error(error)
   }
 }
-
-// FIXME get ads on this page as well!
 
 onMounted(()=>{
     getProfileById()
@@ -101,11 +98,15 @@ onMounted(()=>{
                     </div>
                     <div class="col-4">
                         <!-- FIXME add bio and resume -->
-                        <h5>Socials
+                        <h5>Links
                             <hr />
                         </h5>
                         <h5 v-if="profile.github"><i class="fs-4 mdi mdi-github"></i>{{ profile.github }}</h5>
                         <h5 v-if="profile.linkedin"><i class="fs-4 mdi mdi-linkedin"></i>{{ profile.linkedin }}</h5>
+                        <h5 v-if="profile.resume"><i class="mdi mdi-file-account"></i>{{ profile.resume }}</h5>
+                    </div>
+                    <div class="col-8 mb-4 border-top border-dark">
+                        <p>{{ profile.bio }}</p>
                     </div>
                 </div>
                 <div class="row p-2">

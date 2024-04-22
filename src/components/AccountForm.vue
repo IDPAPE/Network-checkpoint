@@ -21,10 +21,12 @@ const accountData = ref({
   name: '',
   picture: '',
   coverImg: '',
-  email: '',
+  class: '',
+  graduated: '',
   github: '',
   linkedin: '',
-  resume: ''
+  resume: '',
+  bio: ''
 
 })
 
@@ -59,10 +61,6 @@ try {
       <input v-model="accountData.coverImg" class="form-control" type="url" id="account-cover-image" required maxlength="500">
     </div>
     <div class="mb-3 col-3">
-      <label for="account-email">Email</label>
-      <input v-model="accountData.email" class="form-control" type="text" id="account-email"  minlength="3" required maxlength="100"/>
-    </div>
-    <div class="mb-3 col-3">
       <label for="account-gihthub">Github</label>
       <input v-model="accountData.github" class="form-control" type="url" id="account-github" required maxlength="50">
     </div>
@@ -73,6 +71,15 @@ try {
     <div class="mb-3 col-3">
       <label for="account-resume">Resume</label>
       <input v-model="accountData.resume" class="form-control" type="url" id="account-resume" required maxlength="500">
+    </div>
+    <div class="mb-3 col-3">
+      <label class="mx-3" for="account-graduated">Graduated:</label>
+      <input v-model="accountData.graduated" type="checkbox" id="account-graduated" required>
+    </div>
+    <div class="mb-3 col-12">
+      <label for="account-bio">Bio</label>
+      <textarea v-model="accountData.bio" required class="w-100 rounded form-control" name="account-bio" id="account-bio" cols="" rows="10"></textarea>
+
     </div>
 
     <div class="mb-3 col-6">
