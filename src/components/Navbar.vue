@@ -34,7 +34,7 @@ function resetHome(){
   <nav class="navbar navbar-expand-sm navbar-dark bg-black p-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
-        <h1 @click="resetHome()">Like Posts and Stuff!</h1>
+        <h1 @click="resetHome()"><i class="mdi mdi-home"></i> Networking</h1>
       </div>
     </router-link>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
